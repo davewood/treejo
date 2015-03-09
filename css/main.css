@@ -61,3 +61,7 @@
 .node-closer:hover > div {
     border-color: #999;
 }
+
+.node-panel-highlight {
+    border: 1px solid black;
+}
