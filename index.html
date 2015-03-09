@@ -7,7 +7,11 @@
   </head>
   <body>
     <div id="content">
-        <button onclick="treejo.find_node_by_path('1.1.2.4')">goto 1.1.2.4</button><br/><br/>
+        <button onclick="treejo.find_node_by_path('1.1.2')">goto 1.1.2</button>
+        <button onclick="treejo.find_node_by_path('1.1.2.4')">goto 1.1.2.4</button>
+        <button onclick="treejo.find_node_by_path('1.2')">goto 1.2</button>
+        <button onclick="treejo.find_node_by_path('1.2.2.4.1.3')">goto 1.2.2.4.1.3</button>
+        <br/><br/>
         <div id="mytreejo">
 
             <div class="node">
@@ -19,7 +23,7 @@
                     <div class="node-panel-body">node 1 body</div>
                 </div><!-- root node-panel -->
                 <div class="node-content">
-                    <div class="node-closer"><div></div></div>
+                    <div title="close parent" class="node-closer"><div></div></div>
                     <div class="node">
                         <div class="node-panel">
                             <div class="node-panel-header">
@@ -29,7 +33,7 @@
                             <div class="node-panel-body">node 1.1 body</div>
                         </div><!--  1.1 node-panel -->
                         <div class="node-content">
-                            <div class="node-closer"><div></div></div>
+                            <div title="close parent" class="node-closer"><div></div></div>
                             <div class="node">
                                 <div class="node-panel">
                                     <div class="node-panel-header">

@@ -4,7 +4,11 @@
     //url = 'http://localhost:3000/get_node';
     var options = {
         "window_top_offset": 10,
-        "url": 'file:///home/david/dev/treejo/data.json'
+        "url": 'file:///home/david/dev/treejo/data.json',
+        "highlight_cooldown": 5000,
+        "scroll_duration": 500,
+        "show_duration": 500,
+        "hide_duration": 500,
     };
 
     function get_node(title, body) {
@@ -41,13 +45,13 @@
     }
     function node_show(node) {
         node_load(node);
-        node.children('.node-content').slideDown({ duration: 500 });
+        node.children('.node-content').slideDown({ duration: options.show_duration });
         var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
         node_toggle.removeClass('node-closed');
         node_toggle.addClass('node-open');
     }
     function node_hide(node) {
-        node.children('.node-content').slideUp({ duration: 500 });
+        node.children('.node-content').slideUp({ duration: options.hide_duration });
         var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
         node_toggle.removeClass('node-open');
         node_toggle.addClass('node-closed');
@@ -77,7 +81,7 @@
             {
                 scrollTop: node.offset().top - options.window_top_offset
             },
-            500
+            options.scroll_duration
         );
         highlight_panel(node);
     }
@@ -88,7 +92,7 @@
           function() {
               panel.removeClass('node-panel-highlight');
           },
-          5000
+          options.highlight_cooldown
         );
     }
     function is_visible(node) {
