@@ -11,17 +11,29 @@
              + '</div>';
     }
     function node_show(node) {
+        //var url = 'http://localhost:3000/get_node';
+        var url = 'file:///home/david/dev/treejo/data.json';
         var content = node.children('.node-content');
         if ( content.length === 0 ) {
-            content = '<div class="node-content">'
-                         +   '<div class="node-closer"></div>'
-                         +   get_node("head foo", "body foo")
-                         + '</div>';
+            content = $('<div class="node-content" style="display:none;">'
+                    +   '<div class="node-closer"><div></div></div>'
+                    +   '</div>');
+            $.ajax({
+                url:     url,
+                async:   false,
+                type:    'GET',
+                data:    {"node_id":"1"},
+                dataType: 'json',
+                error:   function(jqXHR, textStatus, errorThrown) { console.log(errorThrown); alert('Ajax Error: ' + textStatus); },
+                success: function( data ) {
+                             $.each( data, function(index, value) {
+                                content.append(get_node(value.title, value.body));
+                             })
+                         }
+            });
             node.append(content);
         }
-        else {
-            content.show();
-        }
+        content.slideDown({ duration: 500 });
     }
 
     treejo.init = function(selector) {
@@ -43,7 +55,15 @@
                     function(event) {
                         var node_toggle = $(event.target);
                         var node = node_toggle.closest('.node');
-                        node.find('.node-content').hide();
+                        node.find('.node-content').slideUp({ duration: 500 });
+                        node_toggle.toggleClass('node-closed node-open');
+                    });
+            tree.on('click',
+                    '.node-closer',
+                    function(event) {
+                        var node = $(event.target).closest('.node');
+                        var node_toggle = node.children('.node-header').children('.node-toggle');
+                        node.find('.node-content').slideUp({ duration: 500 });
                         node_toggle.toggleClass('node-closed node-open');
                     });
         }
