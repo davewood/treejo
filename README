@@ -1,0 +1,6 @@
+treejo.js is a library for viewing data organized as a tree.
+
+Features:
+    - lazy loading
+    - load entire branches recursively
+    - find and jump to node according to materialized path
