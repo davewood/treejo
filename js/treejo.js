@@ -1,3 +1,5 @@
+/*! treejo v0.001 | (c) 2015 David Schmidt <davewood@gmx.at> | http://www.gnu.org/licenses/lgpl.html */
+
 (function( treejo, undefined ) {
     'use strict';
 

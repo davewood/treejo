@@ -10,7 +10,7 @@ Features:
 # plackup treejo.psgi
 GET http://localhost:5000/index.html
 
-# load_node((node_id) expects a JSON response formatted like this
+# load_node(node_id) expects a JSON response formatted like this
 {
     "name":"parent_node_name",
     "child_nodes": [
