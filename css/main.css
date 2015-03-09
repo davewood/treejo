@@ -54,9 +54,9 @@
 .node-closer > div {
     border-left: 1px solid #ddd;
     position:absolute;
-    top: 3px;
+    top: -3px;
+    bottom: 0;
     left: 9px;
-    bottom: 3px;
 }
 .node-closer:hover > div {
     border-color: #999;
