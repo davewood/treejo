@@ -1,3 +1,3 @@
 $(document).ready(function() {
-    treejo.init('#mytreejo', { "highlight_cooldown":6000});
+    treejo.init('#mytreejo', { "highlight_duration":6000});
 });

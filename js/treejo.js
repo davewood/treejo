@@ -6,10 +6,9 @@
     var options = {
         "window_top_offset":  30,
         "url":                '/api',
-        "highlight_cooldown": 5000,
+        "highlight_duration": 5000,
         "scroll_duration":    500,
-        "show_duration":      500,
-        "hide_duration":      500,
+        "slide_duration":     500,
     };
 
     function build_node(data) {
@@ -51,13 +50,13 @@
     }
     function node_show(node) {
         node_load(node);
-        node.children('.node-content').slideDown({ duration: options.show_duration });
+        node.children('.node-content').slideDown({ duration: options.slide_duration });
         var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
         node_toggle.removeClass('node-closed');
         node_toggle.addClass('node-open');
     }
     function node_hide(node) {
-        node.children('.node-content').slideUp({ duration: options.hide_duration });
+        node.children('.node-content').slideUp({ duration: options.slide_duration });
         var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
         node_toggle.removeClass('node-open');
         node_toggle.addClass('node-closed');
@@ -98,7 +97,7 @@
           function() {
               panel.removeClass('node-panel-highlight');
           },
-          options.highlight_cooldown
+          options.highlight_duration
         );
     }
     function is_visible(node) {
