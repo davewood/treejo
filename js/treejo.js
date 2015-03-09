@@ -1,7 +1,7 @@
 (function( treejo,  undefined ) {
     'use strict';
 
-        //var url = 'http://localhost:3000/get_node';
+    //url = 'http://localhost:3000/get_node';
     var options = {
         "window_top_offset": 10,
         "url": 'file:///home/david/dev/treejo/data.json'
@@ -18,7 +18,7 @@
              +   '</div>'
              + '</div>';
     }
-    function node_show(node) {
+    function node_load(node) {
         var content = node.children('.node-content');
         if ( content.length === 0 ) {
             content = $('<div class="node-content" style="display:none;"></div>');
@@ -38,11 +38,39 @@
             });
             node.append(content);
         }
-        content.slideDown({ duration: 500 });
+    }
+    function node_show(node) {
+        node_load(node);
+        node.children('.node-content').slideDown({ duration: 500 });
+        var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
+        node_toggle.removeClass('node-closed');
+        node_toggle.addClass('node-open');
     }
     function node_hide(node) {
         node.children('.node-content').slideUp({ duration: 500 });
+        var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
+        node_toggle.removeClass('node-open');
+        node_toggle.addClass('node-closed');
     }
+
+    treejo.find_node_by_path = function(path) {
+        var parts = path.split('.');
+        if ( parts.shift() !== '1' ) {
+            console.warn('materialized paths always have to begin with "1". ('+ path + ')');
+            return;
+        }
+        var current = $('#mytreejo > .node').first();
+        for (var i = 0; i < parts.length; i++) {
+            var index = parts[i] - 1;
+            node_show(current);
+            current = $(current.children('.node-content').children('.node')[ index ]);
+            if (current.length === 0) {
+                console.warn('Path does not exist: ' + path);
+                return;
+            }
+        }
+        scroll_to_node(current);
+    };
 
     function scroll_to_node(node) {
         $('html, body').animate(
@@ -53,7 +81,6 @@
         );
         highlight_panel(node);
     }
-
     function highlight_panel(node) {
         var panel = node.children('.node-panel');
         panel.addClass('node-panel-highlight');
@@ -61,7 +88,7 @@
           function() {
               panel.removeClass('node-panel-highlight');
           },
-          2000
+          5000
         );
     }
     function is_visible(node) {
@@ -88,26 +115,18 @@
             tree.on('click',
                     '.node-toggle.node-closed',
                     function(event) {
-                        var node_toggle = $(event.target);
-                        var node = node_toggle.closest('.node');
-                        node_show(node);
-                        node_toggle.toggleClass('node-closed node-open');
+                        node_show( $(event.target).closest('.node') );
                     });
             tree.on('click',
                     '.node-toggle.node-open',
                     function(event) {
-                        var node_toggle = $(event.target);
-                        var node = node_toggle.closest('.node');
-                        node_hide(node);
-                        node_toggle.toggleClass('node-closed node-open');
+                        node_hide( $(event.target).closest('.node') );
                     });
             tree.on('click',
                     '.node-closer',
                     function(event) {
                         var node = $(event.target).closest('.node');
-                        var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
                         node_hide(node);
-                        node_toggle.toggleClass('node-closed node-open');
                         if( !is_visible(node) ) { scroll_to_node(node); }
                     });
         }
