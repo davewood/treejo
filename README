@@ -1,5 +1,7 @@
 treejo.js is a library for viewing data organized as a tree.
 
+requires jQuery
+
 Features:
     - lazy loading
     - load entire branches recursively
@@ -12,8 +14,20 @@ GET http://localhost:5000/index.html
 {
     "name":"parent_node_name",
     "child_nodes": [
-                     { "id": "1.2.1", "title":"title-1.2.1","body":"body-1.2.1"},
-                     { "id": "1.2.2", "title":"title-1.2.1","body":"body-1.2.2"},
-                     { "id": "1.2.3", "title":"title-1.2.1","body":"body-1.2.3"},
+                     {
+                        "id":    "1.2.1",
+                        "title": "title-1.2.1",
+                        "body":  "body-1.2.1"
+                     },
+                     {
+                        "id":    "1.2.2",
+                        "title": "title-1.2.2",
+                        "body":  "body-1.2.2"
+                     },
+                     {
+                        "id":    "1.2.3",
+                        "title": "title-1.2.3",
+                        "body":  "body-1.2.3"
+                     }
                    ]
 }
