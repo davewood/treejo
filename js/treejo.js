@@ -1,4 +1,4 @@
-(function( treejo,  undefined ) {
+(function( treejo, undefined ) {
     'use strict';
 
     var options = {
@@ -112,7 +112,17 @@
         }
     }
 
-    treejo.init = function(selector) {
+    function merge_options(_options) {
+        for (var name in _options) {
+            if (options.hasOwnProperty(name)) {
+                options[name] = _options[name];
+            }
+        }
+    }
+
+    treejo.init = function(selector, options) {
+        merge_options(options);
+
         var tree = $(selector);
         if ( tree.length === 0 ) {
             console.warn('No elements found using selector: "' + selector + '*');
