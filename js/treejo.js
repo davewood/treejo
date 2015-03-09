@@ -12,14 +12,16 @@
         "hide_duration":      500,
     };
 
-    function build_node(id, title, body) {
-        return '<div data-node-id="' + id + '" class="node">'
+    function build_node(data) {
+        return '<div data-node-id="' + data.id + '" class="node">'
              +   '<div class="node-panel">'
              +     '<div class="node-panel-header">'
-             +       '<div class="node-toggle node-closed"></div> '
-             +       title
+             +     ( data.has_children /* only show buttons if node has children */
+                     ?   '<div class="node-toggle node-closed"></div> '
+                     : '')
+             +       data.title
              +     '</div>'
-             +     '<div class="node-panel-body">' + body + '</div>'
+             +     '<div class="node-panel-body">' + data.body + '</div>'
              +   '</div>'
              + '</div>';
     }
@@ -40,7 +42,7 @@
                 success: function( data ) {
                              content.append('<div class="node-closer" title="close '+data.name+'"><div></div></div>');
                              $.each( data.child_nodes, function(index, value) {
-                                content.append(build_node(value.id, value.title, value.body));
+                                content.append(build_node(value));
                              })
                          }
             });

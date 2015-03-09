@@ -15,9 +15,10 @@ GET http://localhost:5000/index.html
     "name":"parent_node_name",
     "child_nodes": [
                      {
-                        "id":    "1.2.1",
-                        "title": "title-1.2.1",
-                        "body":  "body-1.2.1"
+                        "id":           "1.2.1",
+                        "title":        "title-1.2.1",
+                        "body":         "body-1.2.1",
+                        "has_children": true
                      },
                      {
                         "id":    "1.2.2",
