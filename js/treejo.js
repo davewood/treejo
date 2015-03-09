@@ -5,7 +5,7 @@
 
     var options = {
         "window_top_offset":  30,
-        "url":                'http://localhost:5000/api',
+        "url":                '/api',
         "highlight_cooldown": 5000,
         "scroll_duration":    500,
         "show_duration":      500,
