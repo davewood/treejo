@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>treejo.js</title>
-    <link href="css/main.css" rel="stylesheet">
+    <link href="/css/main.css" rel="stylesheet">
   </head>
   <body>
     <div id="content">
@@ -14,62 +14,80 @@
         <br/><br/>
         <div id="mytreejo">
 
-            <div class="node">
+            <div data-node-id="1" class="node">
                 <div class="node-panel">
                     <div class="node-panel-header">
                         <div class="node-toggle node-open"></div>
                         node 1 header
                     </div>
                     <div class="node-panel-body">node 1 body</div>
-                </div><!-- root node-panel -->
+                </div>
                 <div class="node-content">
-                    <div title="close parent" class="node-closer"><div></div></div>
-                    <div class="node">
+                    <div title="close node-1" class="node-closer"><div></div></div>
+
+                    <!--          -->
+                    <!-- node 1.1 -->
+                    <!--          -->
+                    <div data-node-id="1.1" class="node">
                         <div class="node-panel">
                             <div class="node-panel-header">
                                 <div class="node-toggle node-open"></div>
                                 node 1.1 header
                             </div>
                             <div class="node-panel-body">node 1.1 body</div>
-                        </div><!--  1.1 node-panel -->
+                        </div>
                         <div class="node-content">
-                            <div title="close parent" class="node-closer"><div></div></div>
-                            <div class="node">
+                            <div title="close node-1-1" class="node-closer"><div></div></div>
+
+                            <!--            -->
+                            <!-- node 1.1.1 -->
+                            <!--            -->
+                            <div data-node-id="1.1.1" class="node">
                                 <div class="node-panel">
                                     <div class="node-panel-header">
                                         <div class="node-toggle node-closed"></div>
                                         node 1.1.1  header
                                     </div>
                                     <div class="node-panel-body">node 1.1.1 body</div>
-                                </div><!-- 1.1.1 node-panel -->
+                                </div>
                             </div>
-                            <div class="node">
+
+                            <!--            -->
+                            <!-- node 1.1.2 -->
+                            <!--            -->
+                            <div data-node-id="1.1.2" class="node">
                                 <div class="node-panel">
                                     <div class="node-panel-header">
                                         <div class="node-toggle node-closed"></div>
                                         node 1.1.2 header
                                     </div>
                                     <div class="node-panel-body">node 1.1.2 body</div>
-                                </div><!-- 1.1.2 node-panel -->
+                                </div>
                             </div>
+
                         </div>
                     </div>
-                    <div class="node">
+
+                    <!--          -->
+                    <!-- node 1.2 -->
+                    <!--          -->
+                    <div data-node-id="1.2" class="node">
                         <div class="node-panel">
                             <div class="node-panel-header">
                                 <div class="node-toggle node-closed"></div>
                                 node 1.2 header
                             </div>
                             <div class="node-panel-body">node 1.2 body</div>
-                        </div><!-- 1.2 node-panel -->
+                        </div>
                     </div>
-                </div><!-- root node-content -->
-            </div><!-- root node -->
+
+                </div>
+            </div>
 
         </div>
     </div>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/treejo.js"></script>
-    <script src="js/main.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/treejo.js"></script>
+    <script src="/js/main.js"></script>
   </body>
 </html>

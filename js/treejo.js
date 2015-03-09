@@ -1,18 +1,17 @@
 (function( treejo,  undefined ) {
     'use strict';
 
-    //url = 'http://localhost:3000/get_node';
     var options = {
-        "window_top_offset": 10,
-        "url": 'file:///home/david/dev/treejo/data.json',
+        "window_top_offset":  10,
+        "url":                'http://localhost:5000/api',
         "highlight_cooldown": 5000,
-        "scroll_duration": 500,
-        "show_duration": 500,
-        "hide_duration": 500,
+        "scroll_duration":    500,
+        "show_duration":      500,
+        "hide_duration":      500,
     };
 
-    function get_node(title, body) {
-        return '<div class="node">'
+    function build_node(id, title, body) {
+        return '<div data-node-id="' + id + '" class="node">'
              +   '<div class="node-panel">'
              +     '<div class="node-panel-header">'
              +       '<div class="node-toggle node-closed"></div> '
@@ -23,20 +22,23 @@
              + '</div>';
     }
     function node_load(node) {
+        var node_id = node.data('node-id');
+
         var content = node.children('.node-content');
         if ( content.length === 0 ) {
+            var node_id = node.data('node-id');
             content = $('<div class="node-content" style="display:none;"></div>');
             $.ajax({
                 url:     options.url,
                 async:   false,
                 type:    'GET',
-                data:    {"node_id":"1"},
+                data:    {"node_id": node_id},
                 dataType: 'json',
-                error:   function(jqXHR, textStatus, errorThrown) { console.log(errorThrown); alert('Ajax Error: ' + textStatus); },
+                error:   function(jqXHR, textStatus, errorThrown) { console.warn(errorThrown); alert('Ajax Error: ' + textStatus); },
                 success: function( data ) {
                              content.append('<div class="node-closer" title="close '+data.name+'"><div></div></div>');
                              $.each( data.child_nodes, function(index, value) {
-                                content.append(get_node(value.title, value.body));
+                                content.append(build_node(value.id, value.title, value.body));
                              })
                          }
             });
@@ -67,7 +69,7 @@
         for (var i = 0; i < parts.length; i++) {
             var index = parts[i] - 1;
             node_show(current);
-            current = $(current.children('.node-content').children('.node')[ index ]);
+            current = $( current.children('.node-content').children('.node').get(index) );
             if (current.length === 0) {
                 console.warn('Path does not exist: ' + path);
                 return;
@@ -131,7 +133,12 @@
                     function(event) {
                         var node = $(event.target).closest('.node');
                         node_hide(node);
-                        if( !is_visible(node) ) { scroll_to_node(node); }
+                        if( !is_visible(node) ) {
+                            scroll_to_node(node);
+                        }
+                        else {
+                            highlight_panel(node);
+                        }
                     });
         }
     };
