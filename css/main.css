@@ -25,5 +25,17 @@
 .node-content {
 }
 
+.node-toggle {
+    background-color: #d5d5d5;
+    border: 1px solid #999;
+    border-radius: 2px;
+}
+.node-toggle.node-open:after {
+    content: '-';
+}
+.node-toggle.node-closed:after {
+    content: '+';
+}
+
 .node-closer {
 }
