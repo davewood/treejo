@@ -7,13 +7,63 @@
   </head>
   <body>
     <div id="content">
+
         <div class="node">
             <div class="node-header">
                 <span class="node-toggle node-closed"></span>
-                root node header
+                node 1 header
             </div>
-            <div class="node-body">root node body</div>
+            <div class="node-body">node 1 body</div>
+            <div class="node-content">
+
+                <div class="node-closer">
+                    <div></div>
+                </div>
+
+                <div class="node">
+                    <div class="node-header">
+                        <span class="node-toggle node-open"></span>
+                        node 1.1 header
+                    </div>
+                    <div class="node-body"> node 1.1 body</div>
+
+                    <div class="node-content">
+
+                        <div class="node-closer">
+                            <div></div>
+                        </div>
+
+                        <div class="node">
+                            <div class="node-header">
+                                <span class="node-toggle node-open"></span>
+                                node 1.1.2  header
+                            </div>
+                            <div class="node-body">node 1.1.1 body</div>
+                        </div>
+
+                        <div class="node">
+                            <div class="node-header">
+                                <span class="node-toggle node-closed"></span>
+                                node 1.1.2 header
+                            </div>
+                            <div class="node-body">node 1.1.2 body</div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="node">
+                    <div class="node-header">
+                        <span class="node-toggle node-closed"></span>
+                        node 1.2 header
+                    </div>
+                    <div class="node-body">node 1.2 body</div>
+                </div>
+
+            </div>
         </div>
+
     </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/treejo.js"></script>
