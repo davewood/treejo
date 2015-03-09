@@ -15,9 +15,7 @@
         var url = 'file:///home/david/dev/treejo/data.json';
         var content = node.children('.node-content');
         if ( content.length === 0 ) {
-            content = $('<div class="node-content" style="display:none;">'
-                    +   '<div class="node-closer"><div></div></div>'
-                    +   '</div>');
+            content = $('<div class="node-content" style="display:none;"></div>');
             $.ajax({
                 url:     url,
                 async:   false,
@@ -26,7 +24,8 @@
                 dataType: 'json',
                 error:   function(jqXHR, textStatus, errorThrown) { console.log(errorThrown); alert('Ajax Error: ' + textStatus); },
                 success: function( data ) {
-                             $.each( data, function(index, value) {
+                             content.append('<div class="node-closer" title="close '+data.name+'"><div></div></div>');
+                             $.each( data.child_nodes, function(index, value) {
                                 content.append(get_node(value.title, value.body));
                              })
                          }

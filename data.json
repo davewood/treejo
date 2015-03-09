@@ -1,1 +1,7 @@
-[{ "title":"t1","body":"b1"},{ "title":"t2","body":"b2"}]
+{
+    "name":"parent_name",
+    "child_nodes": [
+                     { "title":"t1","body":"b1"},
+                     { "title":"t2","body":"b2"}
+                   ]
+}
