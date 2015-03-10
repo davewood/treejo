@@ -3,7 +3,7 @@
 (function( treejo, undefined ) {
     'use strict';
 
-    var defaults = {
+    var options = {
         "window_top_offset":  30,
         "url":                '/api',
         "highlight_duration": 5000,
@@ -32,7 +32,7 @@
             var node_id = node.data('node-id');
             content = $('<div class="node-content" style="display:none;"></div>');
             $.ajax({
-                url:     defaults.url,
+                url:     options.url,
                 async:   false,
                 type:    'GET',
                 data:    {"node_id": node_id},
@@ -50,13 +50,13 @@
     }
     function node_show(node) {
         node_load(node);
-        node.children('.node-content').slideDown({ duration: defaults.slide_duration });
+        node.children('.node-content').slideDown({ duration: options.slide_duration });
         var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
         node_toggle.removeClass('node-closed');
         node_toggle.addClass('node-open');
     }
     function node_hide(node) {
-        node.children('.node-content').slideUp({ duration: defaults.slide_duration });
+        node.children('.node-content').slideUp({ duration: options.slide_duration });
         var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
         node_toggle.removeClass('node-open');
         node_toggle.addClass('node-closed');
@@ -64,11 +64,11 @@
 
     treejo.find_node_by_path = function(path) {
         var parts = path.split('.');
-        if ( parts.shift() !== '1' ) {
+        if ( parts.shift() !== '1' ) { // materialized path always starts with '1'
             console.warn('materialized paths always have to begin with "1". ('+ path + ')');
             return;
         }
-        var current = $('#mytreejo > .node').first();
+        var current = $(options.selector + ' > .node').first();
         for (var i = 0; i < parts.length; i++) {
             var index = parts[i] - 1;
             node_show(current);
@@ -84,9 +84,9 @@
     function scroll_to_node(node) {
         $('html, body').animate(
             {
-                scrollTop: node.offset().top - defaults.window_top_offset
+                scrollTop: node.offset().top - options.window_top_offset
             },
-            defaults.scroll_duration
+            options.scroll_duration
         );
         highlight_panel(node);
     }
@@ -97,11 +97,11 @@
           function() {
               panel.removeClass('node-panel-highlight');
           },
-          defaults.highlight_duration
+          options.highlight_duration
         );
     }
     function is_visible(node) {
-        var view_top     = window.pageYOffset + defaults.window_top_offset;
+        var view_top     = window.pageYOffset + options.window_top_offset;
         var view_bottom  = view_top + $(window).height();
         var panel        = node.children('.node-panel');
         var panel_top    = panel.offset().top;
@@ -115,12 +115,12 @@
         }
     }
 
-    treejo.init = function(selector, options) {
-        $.extend( defaults, options ); /* override defaults */
+    treejo.init = function(_options) {
+        $.extend( options, _options ); /* override options */
 
-        var tree = $(selector);
+        var tree = $(options.selector);
         if ( tree.length === 0 ) {
-            console.warn('No elements found using selector: "' + selector + '*');
+            console.warn('No elements found using selector: "' + options.selector + '*');
         }
         else {
             tree.on('click',

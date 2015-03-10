@@ -1,3 +1,6 @@
 $(document).ready(function() {
-    treejo.init('#mytreejo', { "highlight_duration":6000});
+    treejo.init({
+        "selector":"#mytreejo",
+        "highlight_duration":6000
+    });
 });
