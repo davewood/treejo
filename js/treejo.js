@@ -9,6 +9,7 @@
         "highlight_duration": 5000,
         "scroll_duration":    500,
         "slide_duration":     500,
+        "max_counter":        30
     };
 
     function build_node(data) {
@@ -17,6 +18,7 @@
              +     '<div class="node-panel-header">'
              +     ( data.has_children /* only show buttons if node has children */
                      ?   '<div class="node-toggle node-closed"></div> '
+                       + '<div title="open all child nodes" class="node-show-all">a</div> '
                      : '')
              +       data.title
              +     '</div>'
@@ -48,6 +50,36 @@
             node.append(content);
         }
     }
+
+    function node_show_all(nodes) {
+        var counter          = 0;
+        var continue_loading = 1;
+
+        do {
+            if (nodes.length) {
+                nodes.each(
+                    function(index, value) {
+                        if ( counter >= options.max_counter ) {
+                            if (confirm("Do you want to open " + options.max_counter + " more nodes?")) {
+                                counter = 0;
+                            }
+                            else {
+                                continue_loading = 0;
+                                return false; // stop each() loop
+                            }
+                        }
+                        node_show($(value));
+                        counter = counter + 1;
+                    }
+                );
+                nodes = nodes.children('.node-content').children('.node').has('.node-panel > .node-panel-header > .node-closed');
+            }
+            else {
+                continue_loading = 0;
+            }
+        } while( continue_loading );
+    }
+
     function node_show(node) {
         node_load(node);
         node.children('.node-content').slideDown({ duration: options.slide_duration });
@@ -132,6 +164,11 @@
                     '.node-toggle.node-open',
                     function(event) {
                         node_hide( $(event.target).closest('.node') );
+                    });
+            tree.on('click',
+                    '.node-show-all',
+                    function(event) {
+                        node_show_all( $(event.target).closest('.node') );
                     });
             tree.on('click',
                     '.node-closer',

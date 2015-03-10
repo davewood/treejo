@@ -28,7 +28,7 @@
     padding-left: 20px;
 }
 
-.node-toggle {
+.node-toggle, .node-show-all {
     background-color: #d5d5d5;
     border: 1px solid #999;
     border-radius: 2px;
@@ -42,7 +42,6 @@
 .node-toggle.node-closed:after {
     content: '+';
 }
-
 .node-closer {
     cursor: pointer;
     position: absolute;
