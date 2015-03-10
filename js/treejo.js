@@ -9,7 +9,8 @@
         "highlight_duration": 5000,
         "scroll_duration":    500,
         "slide_duration":     500,
-        "max_counter":        30
+        "max_counter":        30,
+        "req_param_key":      'node_id'
     };
 
     function build_node(data) {
@@ -31,21 +32,22 @@
 
         var content = node.children('.node-content');
         if ( content.length === 0 ) {
-            var node_id = node.data('node-id');
+            var data = {};
+            data[options.req_param_key] = node.data('node-id');
             content = $('<div class="node-content" style="display:none;"></div>');
             $.ajax({
-                url:     options.url,
-                async:   false,
-                type:    'GET',
-                data:    {"node_id": node_id},
+                url:      options.url,
+                async:    false,
+                type:     'GET',
+                data:     data,
                 dataType: 'json',
-                error:   function(jqXHR, textStatus, errorThrown) { console.warn(errorThrown); alert('Ajax Error: ' + textStatus); },
-                success: function( data ) {
-                             content.append('<div class="node-closer" title="close '+data.name+'"><div></div></div>');
-                             $.each( data.child_nodes, function(index, value) {
-                                content.append(build_node(value));
-                             })
-                         }
+                error:    function(jqXHR, textStatus, errorThrown) { console.warn(errorThrown); alert('Ajax Error: ' + textStatus); },
+                success:  function( data ) {
+                              content.append('<div class="node-closer" title="close '+data.name+'"><div></div></div>');
+                              $.each( data.child_nodes, function(index, value) {
+                                  content.append(build_node(value));
+                              })
+                          }
             });
             node.append(content);
         }
