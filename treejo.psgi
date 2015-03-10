@@ -22,30 +22,26 @@ my $api_app = sub {
 
     my $req       = Plack::Request->new($env);
     my $node_id   = $req->parameters->{node_id};
-    my $num_nodes = 3 + int( rand(4) );            # [3-6]
+    my $num_nodes = 2 + int( rand(4) );     # [2-5]
     my @nodes;
 
     my $depth = split( /\./, $node_id );    # 1.1.2 => 3, 1.3.4.1 => 4, ...
 
-    # stop delivery of nodes if depth > 5
-    if ( $depth <= 5 ) {
-        for my $i ( 1 .. $num_nodes ) {
-            my $has_children = (rand(1) > 0.5 ? 'true' : 'false');
-            push(
-                @nodes,
-                get_node_data( "$node_id.$i", $has_children )
-            );
-        }
-    }
-    else {
-        push( @nodes, get_node_data( "$node_id.1", 'false' ) );
+    for my $i ( 1 .. $num_nodes ) {
+        # stop delivery of nodes if depth > 5
+        my $has_children = $depth <= 5
+                           ? rand(1) > 0.5 ? 'true' : 'false'
+                           : 'false';
+        push(
+            @nodes,
+            get_node_data( "$node_id.$i", $has_children )
+        );
     }
 
-    my $json =
-        '{ "name":"node-'
-      . $node_id
-      . '", "child_nodes": ['
-      . join( ',', @nodes ) . '] }';
+    my $json = '{'
+             . '"name":"node-' . $node_id . '",'
+             . '"child_nodes":[' . join( ',', @nodes ) . ']'
+             . '}';
     return [ 200, [ 'Content-Type' => 'application/json' ], [$json] ];
 };
 
