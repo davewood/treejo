@@ -3,7 +3,7 @@
 (function( treejo, undefined ) {
     'use strict';
 
-    var options = {
+    var defaults = {
         "window_top_offset":  30,
         "url":                '/api',
         "highlight_duration": 5000,
@@ -32,7 +32,7 @@
             var node_id = node.data('node-id');
             content = $('<div class="node-content" style="display:none;"></div>');
             $.ajax({
-                url:     options.url,
+                url:     defaults.url,
                 async:   false,
                 type:    'GET',
                 data:    {"node_id": node_id},
@@ -50,13 +50,13 @@
     }
     function node_show(node) {
         node_load(node);
-        node.children('.node-content').slideDown({ duration: options.slide_duration });
+        node.children('.node-content').slideDown({ duration: defaults.slide_duration });
         var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
         node_toggle.removeClass('node-closed');
         node_toggle.addClass('node-open');
     }
     function node_hide(node) {
-        node.children('.node-content').slideUp({ duration: options.slide_duration });
+        node.children('.node-content').slideUp({ duration: defaults.slide_duration });
         var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
         node_toggle.removeClass('node-open');
         node_toggle.addClass('node-closed');
@@ -84,9 +84,9 @@
     function scroll_to_node(node) {
         $('html, body').animate(
             {
-                scrollTop: node.offset().top - options.window_top_offset
+                scrollTop: node.offset().top - defaults.window_top_offset
             },
-            options.scroll_duration
+            defaults.scroll_duration
         );
         highlight_panel(node);
     }
@@ -97,11 +97,11 @@
           function() {
               panel.removeClass('node-panel-highlight');
           },
-          options.highlight_duration
+          defaults.highlight_duration
         );
     }
     function is_visible(node) {
-        var view_top     = window.pageYOffset + options.window_top_offset;
+        var view_top     = window.pageYOffset + defaults.window_top_offset;
         var view_bottom  = view_top + $(window).height();
         var panel        = node.children('.node-panel');
         var panel_top    = panel.offset().top;
@@ -115,16 +115,8 @@
         }
     }
 
-    function merge_options(_options) {
-        for (var name in _options) {
-            if (options.hasOwnProperty(name)) {
-                options[name] = _options[name];
-            }
-        }
-    }
-
     treejo.init = function(selector, options) {
-        merge_options(options);
+        $.extend( defaults, options ); /* override defaults */
 
         var tree = $(selector);
         if ( tree.length === 0 ) {
