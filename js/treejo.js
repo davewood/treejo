@@ -27,6 +27,7 @@
              +   '</div>'
              + '</div>';
     }
+
     function node_load(node) {
         var node_id = node.data('node-id');
 
@@ -154,7 +155,7 @@
 
         var tree = $(options.selector);
         if ( tree.length === 0 ) {
-            console.warn('No elements found using selector: "' + options.selector + '*');
+            console.warn('No elements found using selector: "' + options.selector + '"');
         }
         else {
             tree.on('click',
