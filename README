@@ -7,6 +7,8 @@ Features:
     - load entire branches recursively
     - find and jump to node according to materialized path
 
+Note: treejo makes a HTTP request for each node it is loading.
+
 # plackup treejo.psgi
 GET http://localhost:5000/index.html
 
