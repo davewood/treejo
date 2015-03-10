@@ -1,4 +1,8 @@
-/*! treejo v0.001 | (c) 2015 David Schmidt <davewood@gmx.at> | http://www.gnu.org/licenses/lgpl.html */
+/*
+ * treejo v0.001
+ * (c) 2015 David Schmidt <davewood@gmx.at>
+ * Artistic License 2.0 (see LICENSE file for details)
+ * */
 
 (function( treejo, undefined ) {
     'use strict';
