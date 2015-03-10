@@ -31,7 +31,9 @@
                      : '')
              +       data.title
              +     '</div>'
-             +     '<div class="node-panel-body">' + data.body + '</div>'
+             +     ( data.body !== ''
+                     ? '<div class="node-panel-body">' + data.body + '</div>'
+                     : '')
              +   '</div>'
              + '</div>';
     }
