@@ -160,6 +160,21 @@
         }
     }
 
+    // looks for a child element with init data for a root node
+    // and replaces it with a proper node element.
+    function build_root_node(tree) {
+        var root_node = tree.children('.node-init');
+        if ( root_node.length > 0 ) {
+            var node = build_node({
+                                    id:           root_node.data('node-id'),
+                                    title:        root_node.data('title'),
+                                    body:         root_node.data('body'),
+                                    has_children: true
+                                  });
+            root_node.replaceWith(node);
+        }
+    }
+
     treejo.init = function(_options) {
         $.extend( options, _options ); /* override options */
 
@@ -168,6 +183,8 @@
             console.warn('No elements found using selector: "' + options.selector + '"');
         }
         else {
+            build_root_node(tree);
+
             tree.on('click',
                     '.node-toggle.node-closed',
                     function(event) {
