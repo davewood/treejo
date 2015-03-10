@@ -8,13 +8,18 @@
     'use strict';
 
     var options = {
+        "selector":           '#treejo',
         "window_top_offset":  30,
         "url":                '/api',
         "highlight_duration": 5000,
         "scroll_duration":    500,
         "slide_duration":     500,
         "max_counter":        30,
-        "req_param_key":      'node_id'
+        "req_param_key":      'node_id',
+        "html_node_toggle":   '<div class="node-toggle node-closed">+</div> ',
+        "html_node_closed":   '+',
+        "html_node_open":     '-',
+        "html_node_show_all": '<div title="open all child nodes" class="node-show-all">a</div> '
     };
 
     function build_node(data) {
@@ -22,8 +27,7 @@
              +   '<div class="node-panel">'
              +     '<div class="node-panel-header">'
              +     ( data.has_children /* only show buttons if node has children */
-                     ?   '<div class="node-toggle node-closed"></div> '
-                       + '<div title="open all child nodes" class="node-show-all">a</div> '
+                     ? options.html_node_toggle + options.html_node_show_all
                      : '')
              +       data.title
              +     '</div>'
@@ -93,12 +97,14 @@
         var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
         node_toggle.removeClass('node-closed');
         node_toggle.addClass('node-open');
+        node_toggle.html(options.html_node_open);
     }
     function node_hide(node) {
         node.children('.node-content').slideUp({ duration: options.slide_duration });
         var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
         node_toggle.removeClass('node-open');
         node_toggle.addClass('node-closed');
+        node_toggle.html(options.html_node_closed);
     }
 
     treejo.find_node_by_path = function(path) {

@@ -36,12 +36,6 @@
     text-align: center;
     display: inline-block;
 }
-.node-toggle.node-open:after {
-    content: '-';
-}
-.node-toggle.node-closed:after {
-    content: '+';
-}
 .node-closer {
     cursor: pointer;
     position: absolute;
