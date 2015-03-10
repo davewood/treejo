@@ -35,6 +35,7 @@
     width: 14px;
     text-align: center;
     display: inline-block;
+    cursor: pointer;
 }
 .node-closer {
     cursor: pointer;
