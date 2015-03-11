@@ -21,7 +21,6 @@
         "html_node_closed":   '+',
         "html_node_open":     '-',
         "html_node_show_all": '<div title="open all child nodes" class="node-show-all">a</div> ',
-        "html_quicklink":     '<span class="quicklink"></span>'
     };
 
     function node_load(node) {
@@ -182,16 +181,13 @@
     }
 
     // looks for elements with data for a quicklink
-    // and replaces them with proper quicklink element.
+    // and adds a clickhandler for finding a node.
     function build_quicklinks(tree) {
         var quicklinks = tree.find('.quicklink-init');
         quicklinks.each( function( index, value ) {
-            var el  = $( options.html_quicklink );
             var val = $(value);
-            el.addClass( val.removeClass('quicklink-init').attr('class') );
-            el.text(val.data('title'));
-            el.click(function() { find_node_by_path( String(val.data('path')) ); })
-            val.replaceWith(el);
+            val.removeClass('quicklink-init');
+            val.click(function() { find_node_by_path( String(val.data('path')) ); })
         });
     }
 
