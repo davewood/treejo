@@ -166,7 +166,7 @@
     // looks for a child element with init data for a root node
     // and replaces it with a proper node element.
     function build_root_node(tree) {
-        var root_node = tree.children('.node-init');
+        var root_node = tree.find('.node-init');
         if ( root_node.length > 0 ) {
             var node = $(
                           build_node({
@@ -184,7 +184,7 @@
     // looks for elements with data for a quicklink
     // and replaces them with proper quicklink element.
     function build_quicklinks(tree) {
-        var quicklinks = tree.children('.quicklink-init');
+        var quicklinks = tree.find('.quicklink-init');
         quicklinks.each( function( index, value ) {
             var el  = $( options.html_quicklink );
             var val = $(value);
