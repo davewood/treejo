@@ -20,24 +20,9 @@
         "html_node_toggle":   '<div class="node-toggle node-closed">+</div> ',
         "html_node_closed":   '+',
         "html_node_open":     '-',
-        "html_node_show_all": '<div title="open all child nodes" class="node-show-all">a</div> '
+        "html_node_show_all": '<div title="open all child nodes" class="node-show-all">a</div> ',
+        "html_quicklink":     '<span class="quicklink"></span>'
     };
-
-    function build_node(data) {
-        return '<div data-node-id="' + data.id + '" class="node">'
-             +   '<div class="node-panel">'
-             +     '<div class="node-panel-header">'
-             +     ( data.has_children /* only show buttons if node has children */
-                     ? options.html_node_toggle + options.html_node_show_all
-                     : '')
-             +       data.title
-             +     '</div>'
-             +     ( data.body !== ''
-                     ? '<div class="node-panel-body">' + data.body + '</div>'
-                     : '')
-             +   '</div>'
-             + '</div>';
-    }
 
     function node_load(node) {
         var node_id = node.data('node-id');
@@ -110,7 +95,7 @@
         node_toggle.html(options.html_node_closed);
     }
 
-    treejo.find_node_by_path = function(path) {
+    function find_node_by_path(path) {
         var parts = path.split('.');
         if ( parts.shift() !== '1' ) { // materialized path always starts with '1'
             console.warn('materialized paths always have to begin with "1". ('+ path + ')');
@@ -127,7 +112,7 @@
             }
         }
         scroll_to_node(current);
-    };
+    }
 
     function scroll_to_node(node) {
         $('html, body').animate(
@@ -163,6 +148,21 @@
         }
     }
 
+    function build_node(data) {
+        return '<div data-node-id="' + data.id + '" class="node">'
+             +   '<div class="node-panel">'
+             +     '<div class="node-panel-header">'
+             +     ( data.has_children /* only show buttons if node has children */
+                     ? options.html_node_toggle + options.html_node_show_all
+                     : '')
+             +       data.title
+             +     '</div>'
+             +     ( data.body !== ''
+                     ? '<div class="node-panel-body">' + data.body + '</div>'
+                     : '')
+             +   '</div>'
+             + '</div>';
+    }
     // looks for a child element with init data for a root node
     // and replaces it with a proper node element.
     function build_root_node(tree) {
@@ -178,6 +178,19 @@
         }
     }
 
+    // looks for elements with data for a quicklink
+    // and replaces them with proper quicklink element.
+    function build_quicklinks(tree) {
+        var quicklinks = tree.children('.quicklink-init');
+        quicklinks.each( function( index, value ) {
+            var el  = $( options.html_quicklink );
+            var val = $(value);
+            el.text(val.data('title'));
+            el.click(function() { find_node_by_path( String(val.data('path')) ); })
+            val.replaceWith(el);
+        });
+    }
+
     treejo.init = function(_options) {
         $.extend( options, _options ); /* override options */
 
@@ -186,6 +199,7 @@
             console.warn('No elements found using selector: "' + options.selector + '"');
         }
         else {
+            build_quicklinks(tree);
             build_root_node(tree);
 
             tree.on('click',

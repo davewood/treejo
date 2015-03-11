@@ -28,6 +28,14 @@
     padding-left: 20px;
 }
 
+.quicklink {
+    background-color: #d5d5d5;
+    border: 1px solid #999;
+    border-radius: 2px;
+    text-align: center;
+    cursor: pointer;
+}
+
 .node-toggle, .node-show-all {
     background-color: #d5d5d5;
     border: 1px solid #999;

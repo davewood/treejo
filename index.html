@@ -8,12 +8,10 @@
   <body>
     <a href="https://github.com/davewood/treejo">treejo on github</a>
     <div id="content">
-        <button onclick="treejo.find_node_by_path('1.1.2')">goto 1.1.2</button>
-        <button onclick="treejo.find_node_by_path('1.1.2.4')">goto 1.1.2.4</button>
-        <button onclick="treejo.find_node_by_path('1.2')">goto 1.2</button>
-        <button onclick="treejo.find_node_by_path('1.2.2.4.1.3')">goto 1.2.2.4.1.3</button>
-        <br/><br/>
         <div id="mytreejo">
+            <div class="quicklink-init" data-title="goto 1.1" data-path="1.1"></div>
+            <div class="quicklink-init" data-title="goto 1.2" data-path="1.2"></div>
+            <br/><br/>
             <div class="node-init" data-node-id="1" data-title="root title" data-body="root body"></div>
         </div>
     </div>
