@@ -70,7 +70,7 @@
                         counter = counter + 1;
                     }
                 );
-                nodes = nodes.children('.node-content').children('.node').has('.node-panel > .node-panel-header > .node-closed');
+                nodes = nodes.children('.node-content').children('.node').has('.node-panel > .node-heading > .node-closed');
             }
             else {
                 continue_loading = 0;
@@ -81,14 +81,14 @@
     function node_show(node) {
         node_load(node);
         node.children('.node-content').slideDown({ duration: options.slide_duration });
-        var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
+        var node_toggle = node.children('.node-panel').children('.node-heading').children('.node-toggle');
         node_toggle.removeClass('node-closed');
         node_toggle.addClass('node-open');
         node_toggle.html(options.html_node_open);
     }
     function node_hide(node) {
         node.children('.node-content').slideUp({ duration: options.slide_duration });
-        var node_toggle = node.children('.node-panel').children('.node-panel-header').children('.node-toggle');
+        var node_toggle = node.children('.node-panel').children('.node-heading').children('.node-toggle');
         node_toggle.removeClass('node-open');
         node_toggle.addClass('node-closed');
         node_toggle.html(options.html_node_closed);
@@ -124,10 +124,10 @@
     }
     function highlight_panel(node) {
         var panel = node.children('.node-panel');
-        panel.addClass('node-panel-highlight');
+        panel.addClass('node-highlight');
         setTimeout(
           function() {
-              panel.removeClass('node-panel-highlight');
+              panel.removeClass('node-highlight');
           },
           options.highlight_duration
         );
@@ -150,14 +150,14 @@
     function build_node(data) {
         return '<div data-node-id="' + data.id + '" class="node">'
              +   '<div class="node-panel">'
-             +     '<div class="node-panel-header">'
-             +     ( data.has_children /* only show buttons if node has children */
-                     ? options.html_node_toggle + options.html_node_show_all
-                     : '')
              +       data.title
+             +     '<div class="node-heading">'
+             +       ( data.has_children /* only show buttons if node has children */
+                       ? options.html_node_toggle + options.html_node_show_all
+                       : '')
              +     '</div>'
              +     ( data.body !== ''
-                     ? '<div class="node-panel-body">' + data.body + '</div>'
+                     ? '<div class="node-body">' + data.body + '</div>'
                      : '')
              +   '</div>'
              + '</div>';
