@@ -168,12 +168,15 @@
     function build_root_node(tree) {
         var root_node = tree.children('.node-init');
         if ( root_node.length > 0 ) {
-            var node = build_node({
+            var node = $(
+                          build_node({
                                     id:           root_node.data('node-id'),
                                     title:        root_node.data('title'),
                                     body:         root_node.data('body'),
                                     has_children: true
-                                  });
+                                  })
+                       );
+            node.addClass( root_node.removeClass('node-init').attr('class') );
             root_node.replaceWith(node);
         }
     }
@@ -185,6 +188,7 @@
         quicklinks.each( function( index, value ) {
             var el  = $( options.html_quicklink );
             var val = $(value);
+            el.addClass( val.removeClass('quicklink-init').attr('class') );
             el.text(val.data('title'));
             el.click(function() { find_node_by_path( String(val.data('path')) ); })
             val.replaceWith(el);
