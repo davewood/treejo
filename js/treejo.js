@@ -150,11 +150,11 @@
     function build_node(data) {
         return '<div data-node-id="' + data.id + '" class="node">'
              +   '<div class="node-panel">'
-             +       data.title
              +     '<div class="node-heading">'
              +       ( data.has_children /* only show buttons if node has children */
                        ? options.html_node_toggle + options.html_node_show_all
                        : '')
+             +       '<span class="node-title">' + data.title + '</span>'
              +     '</div>'
              +     ( data.body !== ''
                      ? '<div class="node-body">' + data.body + '</div>'
