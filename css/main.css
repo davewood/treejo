@@ -59,3 +59,8 @@
 .node-highlight {
     border: 1px solid black;
 }
+
+.node-danger > .node-panel .node-heading {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}

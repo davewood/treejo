@@ -17,10 +17,10 @@
         "slide_duration":     500,
         "max_counter":        30,
         "req_param_key":      'node_id',
-        "html_node_toggle":   '<div class="node-toggle node-closed">+</div> ',
+        "html_node_toggle":   '<a class="node-toggle node-closed">+</a> ',
         "html_node_closed":   '+',
         "html_node_open":     '-',
-        "html_node_show_all": '<div title="open all child nodes" class="node-show-all">a</div> ',
+        "html_node_show_all": '<a title="open all child nodes" class="node-show-all">a</a> ',
     };
 
     function node_load(node) {
@@ -148,7 +148,10 @@
     }
 
     function build_node(data) {
-        return '<div data-node-id="' + data.id + '" class="node">'
+        var classes = typeof data.classes === 'string'
+                      ? ' ' + data.classes
+                      : '';
+        return '<div data-node-id="' + data.id + '" class="node' + classes + '">'
              +   '<div class="node-panel">'
              +     '<div class="node-heading">'
              +       ( data.has_children /* only show buttons if node has children */

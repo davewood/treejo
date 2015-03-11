@@ -13,6 +13,7 @@ sub get_node_data {
          . '"id":"' . $id . '",'
          . '"title":"title-' . $id . '", '
          . '"body":"body-' . $id . '",'
+         . ( rand(1) > 0.6 ? '"classes":"node-danger",' : '' )
          . '"has_children":' . $has_children
          . '}';
 }
