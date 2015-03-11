@@ -1,8 +1,9 @@
-/*
+/*!
  * treejo v0.001
+ *
  * (c) 2015 David Schmidt <davewood@gmx.at>
- * Artistic License 2.0 (see LICENSE file for details)
- * */
+ * Released under the Artistic License 2.0 (see LICENSE file for details)
+ */
 
 (function( treejo, undefined ) {
     'use strict';
