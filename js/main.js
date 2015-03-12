@@ -1,6 +1,10 @@
 $(document).ready(function() {
-    treejo.init({
-        "selector":           "#mytreejo",
-        "highlight_duration": 6000,
-    });
+    treejo.create(
+        $('#mytreejo1'),
+        { "highlight_duration": 2000 }
+    );
+    treejo.create(
+        $('#mytreejo2'),
+        { 'html_node_show_all': '<a title="open all child nodes" class="node-show-all">++</a> ' }
+    );
 });

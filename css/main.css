@@ -4,6 +4,13 @@
     margin-top: 50px;
     color: #888;
 }
+#mytreejo1, #mytreejo2 {
+    width: 395px;
+    float: left;
+}
+#mytreejo2 {
+    margin-left: 10px;
+}
 
 .node .node { /* doesn't apply to root node */
     margin-top: 3px;
@@ -32,7 +39,7 @@
     background-color: #d5d5d5;
     border: 1px solid #999;
     border-radius: 2px;
-    width: 14px;
+    min-width: 14px;
     text-align: center;
     display: inline-block;
     cursor: pointer;
