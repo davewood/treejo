@@ -6,6 +6,7 @@ Features:
     - lazy loading
     - load entire branches recursively
     - find and jump to node according to materialized path
+    - multiple trees on a single page
 
 Note: treejo makes a HTTP request for each node it is loading.
 
