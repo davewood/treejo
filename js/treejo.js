@@ -56,29 +56,40 @@
                     }
                 });
 
-        function node_load(node) {
-            var node_id = node.data('node-id');
+        function node_load_content(node_id) {
+            var content_data;
+            var ajax_data = {};
+            ajax_data[options.req_param_key] = node_id;
 
+            $.ajax({
+                url:      options.url,
+                async:    false,
+                type:     'GET',
+                data:     ajax_data,
+                dataType: 'json',
+                error:    function(jqXHR, textStatus, errorThrown) {
+                              console.warn(errorThrown);
+                              alert('Ajax Error: ' + textStatus);
+                          },
+                success:  function( data ) {
+                              content_data = data;
+                          }
+            });
+            return content_data;
+        }
+
+        function node_show_content(node) {
             var content = node.children('.node-content');
             if ( content.length === 0 ) {
-                var data = {};
-                data[options.req_param_key] = node.data('node-id');
-                content = $('<div class="node-content" style="display:none;"></div>');
-                $.ajax({
-                    url:      options.url,
-                    async:    false,
-                    type:     'GET',
-                    data:     data,
-                    dataType: 'json',
-                    error:    function(jqXHR, textStatus, errorThrown) { console.warn(errorThrown); alert('Ajax Error: ' + textStatus); },
-                    success:  function( data ) {
-                                  content.append('<div class="node-closer" title="close '+data.name+'"><div></div></div>');
-                                  $.each( data.child_nodes, function(index, value) {
-                                      content.append(build_node(value));
-                                  })
-                              }
-                });
-                node.append(content);
+                var data = node_load_content( node.data('node-id') );
+                if (typeof data === 'object') {
+                    var content = $('<div class="node-content" style="display:none;"></div>');
+                    content.append('<div class="node-closer" title="close '+data.name+'"><div></div></div>');
+                    $.each( data.child_nodes, function(index, value) {
+                        content.append(build_node(value));
+                    })
+                    node.append(content);
+                }
             }
         }
 
@@ -112,7 +123,7 @@
         }
 
         function node_show(node) {
-            node_load(node);
+            node_show_content(node);
             node.children('.node-content').slideDown({ duration: options.slide_duration });
             var node_toggle = node.children('.node-panel').children('.node-heading').children('.node-toggle');
             node_toggle.removeClass('node-closed');
