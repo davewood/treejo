@@ -52,7 +52,7 @@
                         scroll_to_node( node );
                     }
                     else {
-                        highlight_panel( node );
+                        highlight_node( node );
                     }
                 });
 
@@ -164,14 +164,13 @@
                 },
                 options.scroll_duration
             );
-            highlight_panel(node);
+            highlight_node(node);
         }
-        function highlight_panel(node) {
-            var panel = node.children('.node-panel');
-            panel.addClass('node-highlight');
+        function highlight_node(node) {
+            node.addClass('node-highlight');
             setTimeout(
               function() {
-                  panel.removeClass('node-highlight');
+                  node.removeClass('node-highlight');
               },
               options.highlight_duration
             );
