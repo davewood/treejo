@@ -93,9 +93,10 @@
             }
         }
 
-        function node_show_all(nodes) {
+        function node_show_all(node) {
             var counter          = 0;
             var continue_loading = 1;
+            var nodes            = node;
 
             do {
                 if (nodes.length) {
@@ -114,7 +115,7 @@
                             counter = counter + 1;
                         }
                     );
-                    nodes = nodes.children('.node-content').children('.node').has('.node-panel > .node-heading > .node-closed');
+                    nodes = node.find('.node-closed').closest('.node');
                 }
                 else {
                     continue_loading = 0;

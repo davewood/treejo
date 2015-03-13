@@ -50,7 +50,9 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
     var node = tree.find('.node');
     assert.ok( node, "root node has been initialized." );
     assert.ok( node.children('.node-content').length === 0, 'node-content does not exist.' );
-    node.children('.node-panel').children('.node-heading').children('.node-toggle').click();
+
+    var node_heading = node.children('.node-panel').children('.node-heading');
+    node_heading.children('.node-toggle').click();
     var node_content = node.children('.node-content');
     assert.ok( node_content.length === 1, 'node-content has been appended.' );
     var new_nodes = node_content.children('.node');
@@ -61,4 +63,8 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
         $( new_nodes.get(2) ).hasClass('node-highlight'),
         'node 1.3 is highlighted after clicking quicklink.'
     );
+
+    assert.ok(tree.find('.node-closed').length > 0, 'there are closed nodes.');
+    node_heading.children('.node-show-all').click();
+    assert.ok(tree.find('.node-closed').length === 0, 'all nodes are opened after clicking nodes_show_all.');
 });
