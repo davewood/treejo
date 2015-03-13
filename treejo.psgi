@@ -2,7 +2,7 @@
 use 5.018;
 use warnings;
 
-use Plack::App::File;
+use Plack::App::Directory;
 use Plack::Builder;
 use Plack::Request;
 use FindBin qw/ $Bin /;
@@ -47,6 +47,6 @@ my $api_app = sub {
 };
 
 builder {
-    mount '/' => Plack::App::File->new( root => $Bin )->to_app;
+    mount '/' => Plack::App::Directory->new({ root => $Bin })->to_app;
     mount '/api' => $api_app;
 }
