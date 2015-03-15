@@ -58,6 +58,11 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
     var new_nodes = node_content.children('.node');
     assert.ok( new_nodes.length === 4, '4 nodes have been loaded.' );
 
+    var first_child_node = new_nodes.filter('.node-closed').first();
+    var first_child_node_heading = first_child_node.children('.node-panel').children('.node-heading');
+    first_child_node_heading.find('.node-toggle').click();
+    assert.ok( first_child_node.hasClass('node-open'), 'node has .node-open class.' );
+
     tree.children('button').click();
     assert.ok(
         $( new_nodes.get(2) ).hasClass('node-highlight'),

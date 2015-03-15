@@ -19,7 +19,7 @@
         "html_node_toggle":   '<a class="node-toggle">+</a> ',
         "html_node_closed":   '+',
         "html_node_open":     '-',
-        "html_node_show_all": '<a title="open all child nodes" class="node-show-all">a</a> ',
+        "html_node_show_all": '<a title="open all child nodes" class="node-show-all">++</a> ',
     };
 
     treejo.create = function(element, options) {
@@ -29,22 +29,22 @@
         build_root_node();
 
         element.on('click',
-                '.node.node-closed .node-toggle',
+                '.node.node-closed > .node-panel > .node-heading > .node-toggle',
                 function(event) {
                     node_show( $(event.target).closest('.node') );
                 });
         element.on('click',
-                '.node.node-open .node-toggle',
+                '.node.node-open > .node-panel > .node-heading > .node-toggle',
                 function(event) {
                     node_hide( $(event.target).closest('.node') );
                 });
         element.on('click',
-                '.node .node-show-all',
+                '.node > .node-panel > .node-heading > .node-show-all',
                 function(event) {
                     node_show_all( $(event.target).closest('.node') );
                 });
         element.on('click',
-                '.node.node-open .node-closer',
+                '.node.node-open > .node-content > .node-closer',
                 function(event) {
                     var node = $(event.target).closest('.node');
                     node_hide( node );
