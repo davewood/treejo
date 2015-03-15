@@ -12,6 +12,11 @@
     margin-left: 10px;
 }
 
+.quicklinks {
+    margin-bottom: 15px;
+    height: 20px;
+}
+
 .node .node { /* doesn't apply to root node */
     margin-top: 3px;
 }
@@ -70,4 +75,49 @@
 .node-danger > .node-panel .node-heading {
     background-color: #f2dede;
     border-color: #ebccd1;
+}
+
+#mytreejo2 {
+    font-family: sans-serif;
+}
+#mytreejo2 .node-panel {
+    border-width: 0;
+}
+#mytreejo2 .node-panel .node-heading {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid #2e6da4;
+    border-bottom: 0;
+    background-color: #5bc0de;
+    color: #444;
+}
+#mytreejo2 .node-panel .node-body {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: 1px solid #2e6da4;
+    background-color: #eee;
+    color: #888;
+}
+#mytreejo2 .node-toggle {
+    background-color: #337ab7;
+    border-color: #2e6da4;
+    color: #fff;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 4px;
+}
+#mytreejo2 .node-closer:hover div {
+    border-color: #2e6da4;
+}
+#mytreejo2 .quicklinks span {
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+    color: #fff;
+    padding: 5px;
+}
+#mytreejo2 .node-highlight > .node-panel .node-heading {
+    background-color: #39a8bc;
+    color: black;
 }
