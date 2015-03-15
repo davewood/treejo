@@ -7,7 +7,8 @@ $(document).ready(function() {
             'html_node_toggle':   '<a class="node-toggle">&gt;</a> ',
             'html_node_open':     'v',
             'html_node_closed':   '&gt;',
-            'highlight_duration': 9999
+            'highlight_duration': 9999,
+            'slide_duration':     3000
         }
     );
 });
