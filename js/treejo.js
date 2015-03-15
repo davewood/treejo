@@ -16,7 +16,7 @@
         "slide_duration":     500,
         "max_counter":        30,
         "req_param_key":      'node_id',
-        "html_node_toggle":   '<a class="node-toggle node-closed">+</a> ',
+        "html_node_toggle":   '<a class="node-toggle">+</a> ',
         "html_node_closed":   '+',
         "html_node_open":     '-',
         "html_node_show_all": '<a title="open all child nodes" class="node-show-all">a</a> ',
@@ -29,22 +29,22 @@
         build_root_node();
 
         element.on('click',
-                '.node-toggle.node-closed',
+                '.node.node-closed .node-toggle',
                 function(event) {
                     node_show( $(event.target).closest('.node') );
                 });
         element.on('click',
-                '.node-toggle.node-open',
+                '.node.node-open .node-toggle',
                 function(event) {
                     node_hide( $(event.target).closest('.node') );
                 });
         element.on('click',
-                '.node-show-all',
+                '.node .node-show-all',
                 function(event) {
                     node_show_all( $(event.target).closest('.node') );
                 });
         element.on('click',
-                '.node-closer',
+                '.node.node-open .node-closer',
                 function(event) {
                     var node = $(event.target).closest('.node');
                     node_hide( node );
@@ -115,7 +115,7 @@
                             counter = counter + 1;
                         }
                     );
-                    nodes = node.find('.node-closed').closest('.node');
+                    nodes = node.find('.node.node-closed');
                 }
                 else {
                     continue_loading = 0;
@@ -126,17 +126,13 @@
         function node_show(node) {
             node_show_content(node);
             node.children('.node-content').slideDown({ duration: options.slide_duration });
-            var node_toggle = node.children('.node-panel').children('.node-heading').children('.node-toggle');
-            node_toggle.removeClass('node-closed');
-            node_toggle.addClass('node-open');
-            node_toggle.html(options.html_node_open);
+            node.removeClass('node-closed').addClass('node-open');
+            node.children('.node-panel').find('.node-toggle').html(options.html_node_open);
         }
         function node_hide(node) {
             node.children('.node-content').slideUp({ duration: options.slide_duration });
-            var node_toggle = node.children('.node-panel').children('.node-heading').children('.node-toggle');
-            node_toggle.removeClass('node-open');
-            node_toggle.addClass('node-closed');
-            node_toggle.html(options.html_node_closed);
+            node.removeClass('node-open').addClass('node-closed');
+            node.children('.node-panel').find('.node-toggle').html(options.html_node_closed);
         }
 
         function find_node_by_path(path) {
@@ -192,10 +188,12 @@
         }
 
         function build_node(data) {
-            var classes = typeof data.classes === 'string'
-                          ? ' ' + data.classes
-                          : '';
-            return '<div data-node-id="' + data.id + '" class="node' + classes + '">'
+            var node_classes = typeof data.classes !== 'undefined'
+                               ? data.classes
+                               : [];
+            node_classes.push('node');
+            if ( data.has_children ) { node_classes.push('node-closed'); }
+            return '<div data-node-id="' + data.id + '" class="' + node_classes.join(' ') + '">'
                  +   '<div class="node-panel">'
                  +     '<div class="node-heading">'
                  +       ( data.has_children /* only show buttons if node has children */

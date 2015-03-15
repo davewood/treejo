@@ -24,7 +24,7 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
                 "id": node_id+".3",
                 "title": "title-"+node_id+".3",
                 "body": "body-"+node_id+".3",
-                "classes": "node-danger",
+                "classes": ["node-danger"],
                 "has_children": false
             }, {
                 "id": node_id+".4",
@@ -58,13 +58,13 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
     var new_nodes = node_content.children('.node');
     assert.ok( new_nodes.length === 4, '4 nodes have been loaded.' );
 
-    tree.find('button').click();
+    tree.children('button').click();
     assert.ok(
         $( new_nodes.get(2) ).hasClass('node-highlight'),
         'node 1.3 is highlighted after clicking quicklink.'
     );
 
-    assert.ok(tree.find('.node-closed').length > 0, 'there are closed nodes.');
-    node_heading.children('.node-show-all').click();
-    assert.ok(tree.find('.node-closed').length === 0, 'all nodes are opened after clicking nodes_show_all.');
+    assert.ok(tree.find('.node.node-closed').length > 0, 'there are closed nodes.');
+    node_heading.find('.node-show-all').click();
+    assert.ok(tree.find('.node.node-closed').length === 0, 'all nodes are opened after clicking nodes_show_all.');
 });
