@@ -69,6 +69,9 @@
 #mytreejo2 .node-closer:hover div {
     border-color: #2e6da4;
 }
+#mytreejo2 .node-danger > .node-content .node-closer:hover div {
+    border-color: #d43f3a;
+}
 
 #mytreejo2 .node-highlight > .node-panel .node-heading {
     background-color: #39a8bc;
