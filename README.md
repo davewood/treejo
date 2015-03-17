@@ -1,3 +1,8 @@
+Status
+======
+
+Experimental, API unstable.
+
 Name
 ====
 
