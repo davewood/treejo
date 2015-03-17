@@ -201,7 +201,7 @@
                            : '')
                  +       '<span class="node-title">' + data.title + '</span>'
                  +     '</div>'
-                 +     ( data.body !== ''
+                 +     ( typeof data.body === 'string'
                          ? '<div class="node-body">' + data.body + '</div>'
                          : '')
                  +   '</div>'

@@ -23,7 +23,6 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
             }, {
                 "id": node_id+".3",
                 "title": "title-"+node_id+".3",
-                "body": "body-"+node_id+".3",
                 "classes": ["node-danger"],
                 "has_children": false
             }, {
@@ -72,4 +71,15 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
     assert.ok(tree.find('.node.node-closed').length > 0, 'there are closed nodes.');
     node_heading.find('.node-show-all').click();
     assert.ok(tree.find('.node.node-closed').length === 0, 'all nodes are opened after clicking nodes_show_all.');
+
+    var node_without_body = tree.find('.node[data-node-id="1.2"]');
+    assert.ok(
+            node_without_body.children('.node-panel').children('.node-body').length === 1,
+            'node 1.2 has a body element.'
+    );
+    var node_without_body = tree.find('.node[data-node-id="1.3"]');
+    assert.ok(
+            node_without_body.children('.node-panel').children('.node-body').length === 0,
+            'node 1.3 has no body element.'
+    );
 });
