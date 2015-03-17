@@ -10,12 +10,10 @@
 
     var defaults = {
         "window_top_offset":  30,
-        "url":                '/api',
         "highlight_duration": 5000,
         "scroll_duration":    500,
         "slide_duration":     500,
         "max_counter":        30,
-        "req_param_key":      'node_id',
         "html_node_toggle":   '<a class="node-toggle">+</a> ',
         "html_node_closed":   '+',
         "html_node_open":     '-',
@@ -56,16 +54,17 @@
                     }
                 });
 
-        function node_load_content(node_id) {
+        function node_load_content(node) {
+            var url = node.data('url');
+            if (!url) {
+                console.warn('Node has no data-url attribute. Cannot load content.');
+                return;
+            }
             var content_data;
-            var ajax_data = {};
-            ajax_data[options.req_param_key] = node_id;
-
             $.ajax({
-                url:      options.url,
+                url:      url,
                 async:    false,
                 type:     'GET',
-                data:     ajax_data,
                 dataType: 'json',
                 error:    function(jqXHR, textStatus, errorThrown) {
                               console.warn(errorThrown);
@@ -81,8 +80,8 @@
         function node_show_content(node) {
             var content = node.children('.node-content');
             if ( content.length === 0 ) {
-                var data = node_load_content( node.data('node-id') );
-                if (typeof data === 'object') {
+                var data = node_load_content( node );
+                if (data) {
                     var content = $('<div class="node-content" style="display:none;"></div>');
                     content.append('<div class="node-closer" title="close '+data.name+'"><div></div></div>');
                     $.each( data.child_nodes, function(index, value) {
@@ -188,22 +187,20 @@
         }
 
         function build_node(data) {
-            var node_classes = typeof data.classes !== 'undefined'
-                               ? data.classes
-                               : [];
+            var node_classes = data.classes ? data.classes : [];
             node_classes.push('node');
-            if ( data.has_children ) { node_classes.push('node-closed'); }
-            return '<div data-node-id="' + data.id + '" class="' + node_classes.join(' ') + '">'
+            if ( data.url ) { node_classes.push('node-closed'); }
+            return '<div class="' + node_classes.join(' ') + '"'
+                 +   ( data.url ? ' data-url="' + data.url + '"' : '' )
+                 +   '>'
                  +   '<div class="node-panel">'
                  +     '<div class="node-heading">'
-                 +       ( data.has_children /* only show buttons if node has children */
+                 +       ( data.url /* only show buttons if node has children */
                            ? options.html_node_toggle + options.html_node_show_all
                            : '')
                  +       '<span class="node-title">' + data.title + '</span>'
                  +     '</div>'
-                 +     ( typeof data.body === 'string'
-                         ? '<div class="node-body">' + data.body + '</div>'
-                         : '')
+                 +     ( data.body ? '<div class="node-body">' + data.body + '</div>' : '' )
                  +   '</div>'
                  + '</div>';
         }
@@ -214,10 +211,9 @@
             if ( root_node.length > 0 ) {
                 var node = $(
                               build_node({
-                                        id:           root_node.data('node-id'),
-                                        title:        root_node.data('title'),
-                                        body:         root_node.data('body'),
-                                        has_children: true
+                                        url:   root_node.data('url'),
+                                        title: root_node.data('title'),
+                                        body:  root_node.data('body'),
                                       })
                            );
                 node.addClass( root_node.removeClass('node-init').attr('class') );

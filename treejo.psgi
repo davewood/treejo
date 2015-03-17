@@ -10,11 +10,10 @@ use FindBin qw/ $Bin /;
 sub get_node_data {
     my ( $id, $has_children )= @_;
     return '{'
-         . '"id":"' . $id . '",'
          . '"title":"title-' . $id . '", '
-         . '"body":"body-' . $id . '",'
-         . ( rand(1) > 0.6 ? '"classes":["node-danger"],' : '' )
-         . '"has_children":' . $has_children
+         . '"body":"body-' . $id . '"'
+         . ( rand(1) > 0.6 ? ',"classes":["node-danger"]' : '' )
+         . ( $has_children ? ',"url":"/api?node_id=' . $id . '"' : '' )
          . '}';
 }
 
@@ -31,8 +30,8 @@ my $api_app = sub {
     for my $i ( 1 .. $num_nodes ) {
         # stop delivery of nodes if depth > 5
         my $has_children = $depth <= 5
-                           ? rand(1) > 0.5 ? 'true' : 'false'
-                           : 'false';
+                           ? rand(1) > 0.5 ? 1 : 0
+                           : 0;
         push(
             @nodes,
             get_node_data( "$node_id.$i", $has_children )

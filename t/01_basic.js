@@ -2,31 +2,27 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
 
     // mock ajax request
     jQuery.ajax = function(args) {
-        var node_id = args.data.node_id;
+        var url = args.url;
+        var req_param = 'node_id='
+        var index_of_node_id = String(url).indexOf( req_param );
+        var node_id = String(url).substr( index_of_node_id + req_param.length );
+
         var child_nodes = String(node_id).split('.').length > 3
         ? [{
-                "id": node_id+".1",
                 "title": "title-"+node_id+".1",
                 "body": "body-"+node_id+".1",
-                "has_children": false
             }]
             : [{
-                "id": node_id+".1",
                 "title": "title-"+node_id+".1",
                 "body": "body-"+node_id+".1",
-                "has_children": false
             }, {
-                "id": node_id+".2",
                 "title": "title-"+node_id+".2",
                 "body": "body-"+node_id+".2",
-                "has_children": true
+                "url": "/api?node_id="+node_id+".2"
             }, {
-                "id": node_id+".3",
                 "title": "title-"+node_id+".3",
                 "classes": ["node-danger"],
-                "has_children": false
             }, {
-                "id": node_id+".4",
                 "title": "title-"+node_id+".4",
                 "body": "body-"+node_id+".4",
                 "has_children": false
@@ -43,7 +39,7 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
 
     var tree = $('<div id="mytreejo">'
                +   '<button class="quicklink-init" data-path="1.3">goto 1.3</button>'
-               +   '<div class="node-init" data-node-id="1" data-title="root title" data-body="root body"></div>'
+               +   '<div class="node-init" data-url="/api?node_id=1" data-title="root title" data-body="root body"></div>'
                + '</div>');
     treejo.create(tree);
     var node = tree.find('.node');
@@ -72,12 +68,12 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
     node_heading.find('.node-show-all').click();
     assert.ok(tree.find('.node.node-closed').length === 0, 'all nodes are opened after clicking nodes_show_all.');
 
-    var node_without_body = tree.find('.node[data-node-id="1.2"]');
+    var node_with_body = tree.find('.node[data-url="/api?node_id=1.2"]');
     assert.ok(
-            node_without_body.children('.node-panel').children('.node-body').length === 1,
+            node_with_body.children('.node-panel').children('.node-body').length === 1,
             'node 1.2 has a body element.'
     );
-    var node_without_body = tree.find('.node[data-node-id="1.3"]');
+    var node_without_body = tree.find('.node[data-url="/api?node_id=1.3"]');
     assert.ok(
             node_without_body.children('.node-panel').children('.node-body').length === 0,
             'node 1.3 has no body element.'
