@@ -56,7 +56,7 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
     var first_child_node = new_nodes.filter('.node-closed').first();
     var first_child_node_heading = first_child_node.children('.node-panel').children('.node-heading');
     first_child_node_heading.find('.node-toggle').click();
-    assert.ok( first_child_node.hasClass('node-open'), 'node has .node-open class.' );
+    assert.ok( first_child_node.hasClass('node-opened'), 'node has .node-opened class.' );
 
     tree.children('button').click();
     assert.ok(
@@ -65,8 +65,8 @@ QUnit.test( "basic treejo functionality.", function( assert ) {
     );
 
     assert.ok(tree.find('.node.node-closed').length > 0, 'there are closed nodes.');
-    node_heading.find('.node-show-all').click();
-    assert.ok(tree.find('.node.node-closed').length === 0, 'all nodes are opened after clicking nodes_show_all.');
+    node_heading.find('.node-showall').click();
+    assert.ok(tree.find('.node.node-closed').length === 0, 'all nodes are opened after clicking nodes-showall.');
 
     var node_with_body = tree.find('.node[data-url="/api?node_id=1.2"]');
     assert.ok(

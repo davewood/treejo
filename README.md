@@ -26,7 +26,7 @@ Synopsis
 
     <script type="text/javascript">
         $(document).ready(function() {
-            treejo.create( $('#mytreejo') );
+            treejo.create( $('#mytreejo'), { /*options*/ } );
         });
     </script>
 ```
@@ -35,19 +35,22 @@ Synopsis
 Description
 ===========
 
-**lazy loading**  
-branches are loaded via ajax on demand when the user opens a node.  
+**lazy loading**
+branches are loaded via ajax on demand when the user opens a node.
 treejo makes a HTTP request for each node it is loading.
 
 **load entire branches recursively**
 
-**quicklinks**  
+**quicklinks**
 find and jump to node according to materialized path
 
-**encapsulation**  
+**encapsulation**
 put multiple treejo trees on a single page
 
-
+**reload node**
+provide a value to the "html_node_reload" option to enable reloading of a node.
+you might need this if you have loaded a node and want to fetch any changes
+that may have occured on the backend.
 
 Options
 =======
@@ -58,17 +61,17 @@ Options
 "scroll_duration":    500,
 "slide_duration":     500,
 "max_counter":        30,
-"html_node_toggle":   '<a class="node-toggle">+</a> ',
 "html_node_closed":   '+',
 "html_node_open":     '-',
-"html_node_show_all": '<a title="open all child nodes" class="node-show-all">++</a> ',
+"html_node_reload":   '',
+"html_node_showall": '++',
 ```
 
 
 Demo
 ====
 
-`plackup treejo.psgi`  
+`plackup treejo.psgi`
 GET http://localhost:5000/index.html
 
 `load_node_content(node)` expects a JSON response formatted like this

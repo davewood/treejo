@@ -14,14 +14,21 @@
         "scroll_duration":    500,
         "slide_duration":     500,
         "max_counter":        30,
-        "html_node_toggle":   '<a class="node-toggle">+</a> ',
         "html_node_closed":   '+',
-        "html_node_open":     '-',
-        "html_node_show_all": '<a title="open all child nodes" class="node-show-all">++</a> ',
+        "html_node_opened":   '-',
+        "html_node_showall": '++',
+        "html_node_reload":   ''
     };
 
     treejo.create = function(element, options) {
         options = $.extend( {}, defaults, options );
+        options.html_node_toggle = '<a class="node-toggle node-closed">'+options.html_node_closed+'</a> ';
+        options.html_node_reload = options.html_node_reload
+                ? '<a class="node-reload">'+options.html_node_reload+'</a> '
+                : '';
+        options.html_node_showall = options.html_node_showall
+                ? '<a class="node-showall">'+options.html_node_showall+'</a> '
+                : '';
 
         build_quicklinks();
         build_root_node();
@@ -32,17 +39,22 @@
                     node_show( $(event.target).closest('.node') );
                 });
         element.on('click',
-                '.node.node-open > .node-panel > .node-heading > .node-toggle',
+                '.node.node-opened > .node-panel > .node-heading > .node-toggle',
                 function(event) {
                     node_hide( $(event.target).closest('.node') );
                 });
         element.on('click',
-                '.node > .node-panel > .node-heading > .node-show-all',
+                '.node > .node-panel > .node-heading > .node-showall',
                 function(event) {
-                    node_show_all( $(event.target).closest('.node') );
+                    node_showall( $(event.target).closest('.node') );
                 });
         element.on('click',
-                '.node.node-open > .node-content > .node-closer',
+                '.node > .node-panel > .node-heading > .node-reload',
+                function(event) {
+                    node_reload( $(event.target).closest('.node') );
+                });
+        element.on('click',
+                '.node.node-opened > .node-content > .node-closer',
                 function(event) {
                     var node = $(event.target).closest('.node');
                     node_hide( node );
@@ -77,6 +89,12 @@
             return content_data;
         }
 
+        function node_reload(node) {
+            node_hide(node);
+            node.children('.node-content').remove();
+            node_show(node);
+        }
+
         function node_show_content(node) {
             var content = node.children('.node-content');
             if ( content.length === 0 ) {
@@ -92,7 +110,7 @@
             }
         }
 
-        function node_show_all(node) {
+        function node_showall(node) {
             var counter          = 0;
             var continue_loading = 1;
             var nodes            = node;
@@ -125,12 +143,12 @@
         function node_show(node) {
             node_show_content(node);
             node.children('.node-content').slideDown({ duration: options.slide_duration });
-            node.removeClass('node-closed').addClass('node-open');
-            node.children('.node-panel').find('.node-toggle').html(options.html_node_open);
+            node.removeClass('node-closed').addClass('node-opened');
+            node.children('.node-panel').find('.node-toggle').html(options.html_node_opened);
         }
         function node_hide(node) {
             node.children('.node-content').slideUp({ duration: options.slide_duration });
-            node.removeClass('node-open').addClass('node-closed');
+            node.removeClass('node-opened').addClass('node-closed');
             node.children('.node-panel').find('.node-toggle').html(options.html_node_closed);
         }
 
@@ -196,7 +214,9 @@
                  +   '<div class="node-panel">'
                  +     '<div class="node-heading">'
                  +       ( data.url /* only show buttons if node has children */
-                           ? options.html_node_toggle + options.html_node_show_all
+                           ? options.html_node_toggle
+                             + options.html_node_showall
+                             + options.html_node_reload + ' '
                            : '')
                  +       '<span class="node-title">' + data.title + '</span>'
                  +     '</div>'

@@ -39,7 +39,7 @@
     padding-left: 20px;
 }
 
-#mytreejo2 .node-toggle, #mytreejo2 .node-show-all {
+#mytreejo2 .node-toggle, #mytreejo2 .node-showall, #mytreejo2 .node-reload {
     background-color: #337ab7;
     border-color: #2e6da4;
     color: #fff;
