@@ -248,7 +248,10 @@
             quicklinks.each( function( index, value ) {
                 var val = $(value);
                 val.removeClass('quicklink-init');
-                val.click(function() { find_node_by_path( String(val.data('path')) ); })
+                val.click(function(ev) {
+                    find_node_by_path( String(val.data('path')) );
+                    ev.preventDefault();
+                })
             });
         }
 
