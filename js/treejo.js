@@ -23,15 +23,10 @@
     treejo.create = function(element, options) {
         options = $.extend( {}, defaults, options );
         options.html_node_toggle = '<a class="node-toggle node-closed">'+options.html_node_closed+'</a> ';
-        options.html_node_reload = options.html_node_reload
-                ? '<a class="node-reload">'+options.html_node_reload+'</a> '
-                : '';
-        options.html_node_showall = options.html_node_showall
-                ? '<a class="node-showall">'+options.html_node_showall+'</a> '
-                : '';
-
-        build_quicklinks();
-        build_root_node();
+        options.html_node_reload = options.html_node_reload ?
+            '<a class="node-reload">'+options.html_node_reload+'</a> ' : '';
+        options.html_node_showall = options.html_node_showall ?
+            '<a class="node-showall">'+options.html_node_showall+'</a> ' : '';
 
         element.on('click',
                 '.node.node-closed > .node-panel > .node-heading > .node-toggle',
@@ -100,11 +95,11 @@
             if ( content.length === 0 ) {
                 var data = node_load_content( node );
                 if (data) {
-                    var content = $('<div class="node-content" style="display:none;"></div>');
+                    content = $('<div class="node-content" style="display:none;"></div>');
                     content.append('<div class="node-closer" title="close '+data.name+'"><div></div></div>');
                     $.each( data.child_nodes, function(index, value) {
                         content.append(build_node(value));
-                    })
+                    });
                     node.append(content);
                 }
             }
@@ -208,21 +203,21 @@
             var node_classes = data.classes ? data.classes : [];
             node_classes.push('node');
             if ( data.url ) { node_classes.push('node-closed'); }
-            return '<div class="' + node_classes.join(' ') + '"'
-                 +   ( data.url ? ' data-url="' + data.url + '"' : '' )
-                 +   '>'
-                 +   '<div class="node-panel">'
-                 +     '<div class="node-heading">'
-                 +       ( data.url /* only show buttons if node has children */
-                           ? options.html_node_toggle
-                             + options.html_node_showall
-                             + options.html_node_reload + ' '
-                           : '')
-                 +       '<span class="node-title">' + data.title + '</span>'
-                 +     '</div>'
-                 +     ( data.body ? '<div class="node-body">' + data.body + '</div>' : '' )
-                 +   '</div>'
-                 + '</div>';
+            return '<div class="' + node_classes.join(' ') + '"' +
+                     ( data.url ? ' data-url="' + data.url + '"' : '' ) +
+                   '>' +
+                   '  <div class="node-panel">' +
+                   '    <div class="node-heading">' +
+                          ( data.url ? /* only show buttons if node has children */
+                              options.html_node_toggle +
+                              options.html_node_showall +
+                              options.html_node_reload + ' '
+                            : '') +
+                   '      <span class="node-title">' + data.title + '</span>' +
+                   '    </div>' +
+                        ( data.body ? '<div class="node-body">' + data.body + '</div>' : '' ) +
+                   '  </div>' +
+                   '</div>';
         }
         // looks for a child element with init data for a root node
         // and replaces it with a proper node element.
@@ -251,9 +246,12 @@
                 val.click(function(ev) {
                     find_node_by_path( String(val.data('path')) );
                     ev.preventDefault();
-                })
+                });
             });
         }
+
+        build_quicklinks();
+        build_root_node();
 
     };
 
